@@ -46,6 +46,11 @@ E.g.
 </p>
 ```
 
+Note that it's impossible to escape the `@` character. If it's followed by a valid identifier path, like `@example.com`, Tiny Components will try to interpolate it no matter what.  There are 2 incredibly important reasons for this:
+
+1. it prevents developers from hard-coding email addresses in the HTML
+2. i have yet to need this feature, so i have yet to implement it.  lmao.
+
 ### Attribute Binding
 
 Attribute values can be bound by prefixing the attribute with `:` [(again completely original!!)](https://vuejs.org/).
@@ -94,4 +99,4 @@ Legibility was an afterthought but after a while I thought about it and decided 
 
 Notice that there is no mention of expressions within templates.  This is because putting expressions in your template is stupid and shouldn't be done.  Code files are for code.  Markup files are for markup.  And also because I didn't want to write the code to support it.
 
-On the subject of reactivity: it exists.  It is not super well thought out.  69% of the time it works every time.  Like other libraries that provide reactivity, it uses properties and method replacement, meaning creating new properties using indexing or indexing on numbers a la array will not cause it to react.  Furthermore, reactivity is pretty closely linked to the rendering system.  The only reaction you'll get from the reactivity is re-rendering dependent template nodes.  There is no such thing as a "computed property" or any other form of data reactivity, at least right now (likely ever, I start things, I don't finish them).  Also, there are several places where objects are re-created rather than re-used (component instantiating, cloning of `:for` nodes to create contextual variables) and reactivity very well probably may conceivably likely not work through these barriers.  Don't modify a variable in a child component and expect its source in the parent component to update (obligatory "would be cool if it did").  More frustratingly, don't modify an iteratable item in a parent component and expect the child component to update.  It probably won't.
+On the subject of reactivity: it exists.  It is not super well thought out.  69% of the time it works every time.  Like other libraries that provide reactivity, it uses accessors and method replacement, meaning creating new properties using indexing or indexing on numbers a la array will not cause it to react.  Furthermore, reactivity is pretty closely linked to the rendering system.  The only reaction you'll get from the reactivity is re-rendering dependent template nodes.  There is no such thing as a "computed property" or any other form of data reactivity, at least right now (likely ever, I start things, I don't finish them).  Also, there are several places where objects are re-created rather than re-used (component instantiating, cloning of `:for` nodes to create contextual variables) and reactivity very well probably may conceivably likely not work through these barriers.  Don't modify a variable in a child component and expect its source in the parent component to update (obligatory "would be cool if it did").  More frustratingly, don't modify an iteratable item in a parent component and expect the child component to update.  It probably won't.
